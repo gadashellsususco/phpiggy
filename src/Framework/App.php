@@ -20,7 +20,7 @@ class App
       $this->router->dispatch($path, $method);
     }
 
-    public function get(string $path, array $controller)
+    public function get(string $path, array $controller) 
     {
         $this->router->add('GET', $path, $controller);
     }

@@ -18,7 +18,7 @@ class HomeController
     {
         
         echo $this->view->render("/index.php", [
-        'title' => 'Home page'
+      
         ]);
     }
 }

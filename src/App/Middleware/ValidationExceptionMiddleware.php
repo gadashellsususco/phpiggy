@@ -11,10 +11,22 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
 {
     public function process(callable $next)
     {
-        try{
+        try {
             $next();
         } catch(ValidationException $e) {
-            redirectTo("/register");
+            $oldFormData = $_POST;
+
+            $excludedFields = ['password', 'confirmPassword'];
+            $formattedFormData = array_diff_key(
+                $oldFormData, 
+                array_flip($excludedFields)
+            );
+
+            $_SESSION['errors'] = $e->errors;
+            $_SESSION['oldFormData'] = $formattedFormData;
+
+            $referer = $_SERVER['HTTP_REFERER'];
+            redirectTo($referer);
         }
         
     }
